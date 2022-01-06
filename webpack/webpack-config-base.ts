@@ -5,10 +5,6 @@ const webpackBaseConfig: Configuration = {
   module: {
     rules: [
       {
-        test: /\.(graphql|gql)$/,
-        use: 'raw-loader',
-      },
-      {
         test: /\.ts$/,
         exclude: /node_modules/,
         use: [
@@ -28,6 +24,7 @@ const webpackBaseConfig: Configuration = {
   },
   externals: [
     /^@via-profit-services\/core$/,
+    /^busboy$/,
     /^pg$/,
     /^pg-hstore$/,
     /^pg-listen$/,
