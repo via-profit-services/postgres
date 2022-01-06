@@ -9,10 +9,6 @@ const factory: MiddlewareFactory = async config => {
       config,
       emitter: context.emitter,
     });
-
-    return {
-      context,
-    };
   };
 
   return middleware;
