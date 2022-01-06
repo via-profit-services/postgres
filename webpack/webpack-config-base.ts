@@ -24,6 +24,7 @@ const webpackBaseConfig: Configuration = {
   },
   externals: [
     /^@via-profit-services\/core$/,
+    /^busboy$/,
     /^pg$/,
     /^pg-hstore$/,
     /^pg-listen$/,
