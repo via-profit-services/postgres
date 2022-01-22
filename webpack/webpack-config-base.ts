@@ -22,7 +22,14 @@ const webpackBaseConfig: Configuration = {
   resolve: {
     extensions: ['.ts', '.js', '.json'],
   },
-  externals: [/^@via-profit-services\/core$/, /^busboy$/, /^pg$/, /^pg-hstore$/, /^pg-listen$/],
+  externals: [
+    /^@via-profit-services\/core$/,
+    'graphql',
+    /^busboy$/,
+    /^pg$/,
+    /^pg-hstore$/,
+    /^pg-listen$/,
+  ],
 };
 
 export default webpackBaseConfig;

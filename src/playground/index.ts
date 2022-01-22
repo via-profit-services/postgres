@@ -1,22 +1,22 @@
 /* eslint-disable no-console */
-import express from 'express';
-import * as core from '@via-profit-services/core';
+import http from 'node:http';
+import { graphqlHTTPFactory } from '@via-profit-services/core';
 
 import postgres from '../index';
 import schema from './schema';
 
 (async () => {
   const port = 9005;
-  const app = express();
+  const server = http.createServer();
 
-  const postgresMiddleware = await postgres({
+  const { pgMiddleware } = postgres({
     user: 'tlktransfer',
     database: 'tlktransfer_server',
     password: 'admin',
     host: 'localhost',
   });
 
-  const graphQLExpress = await core.graphqlExpressFactory({
+  const httpListener = graphqlHTTPFactory({
     schema,
     middleware: [
       ({ context, stats }) => {
@@ -27,13 +27,12 @@ import schema from './schema';
           context.emitter.on('postgres-end', () => console.error('[log] end'));
         }
       },
-      postgresMiddleware,
+      pgMiddleware,
     ],
   });
 
-  app.use('/graphql', graphQLExpress);
-
-  app.listen(port, () => {
+  server.on('request', httpListener);
+  server.listen(port, () => {
     // eslint-disable-next-line no-console
     console.info(`GraphQL server started at port ${port}`);
   });

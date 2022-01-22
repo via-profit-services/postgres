@@ -1,21 +1,16 @@
 declare module '@via-profit-services/postgres' {
-  import { Middleware, CoreEmitter } from '@via-profit-services/core';
-  import { PoolClient, PoolConfig } from 'pg';
+  import { Middleware } from '@via-profit-services/core';
+  import { PoolClient, PoolConfig, Pool } from 'pg';
 
   export type Configuration = PoolConfig;
 
-  export type MiddlewareFactory = (config: Configuration) => Promise<Middleware>;
-
-  export type PostgresProvider = (props: PostgresProviderProps) => Promise<PoolClient>;
-
-  export interface PostgresProviderProps {
-    config: Configuration;
-    emitter: CoreEmitter;
-  }
+  export type MiddlewareFactory = (config: Configuration) => {
+    pgPool: Pool;
+    pgMiddleware: Middleware;
+  };
 }
 
 declare module '@via-profit-services/core' {
-  import '@via-profit-services/core/dist/index';
   import { PoolClient, Notification } from 'pg';
   interface CoreEmitter {
     on(event: 'postgres-pool-connect', listener: (client: PoolClient) => void): this;

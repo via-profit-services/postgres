@@ -3,6 +3,7 @@ import { JSONScalarType, Context } from '@via-profit-services/core';
 
 const Schema = new GraphQLSchema({
   description: 'Playground schema',
+  types: [JSONScalarType],
   query: new GraphQLObjectType<unknown, Context>({
     name: 'Query',
     fields: {
